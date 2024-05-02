@@ -15,7 +15,6 @@ VALL-E X is an amazing multilingual text-to-speech (TTS) model proposed by Micro
 * [🚀 Updates](#-updates)
 * [📢 Features](#-features)
 * [💻 Installation](#-installation)
-* [🎧 Demos](#-demos)
 * [🐍 Usage](#-usage-in-python)
 * [❓ FAQ](#-faq)
 
@@ -35,11 +34,11 @@ VALL-E X is an amazing multilingual text-to-speech (TTS) model proposed by Micro
 
 ## 💻 Installation
 ### Install with pip, Python 3.10, CUDA 11.7 ~ 12.0, PyTorch 2.0+
-commandline
+```commandline
 git clone https://github.com/Plachtaa/VALL-E-X.git
 cd VALL-E-X
 pip install -r requirements.txt
-
+```
 
 > Note: If you want to make prompt, you need to install ffmpeg and add its folder to the environment variable PATH.
 
@@ -60,13 +59,6 @@ If not, manually create a `whisper` folder (`./whisper/`) in the installation di
 
 4. Check whether there is a `medium.pt` file in the `whisper` folder. 
 If not, please manually download the `medium.pt` file from [here](https://openaipublic.azureedge.net/main/whisper/models/345ae4da62f9b3d59415adc60127b97c714f32e89e936602e85993674d08dcb1/medium.pt) and put it in the `whisper` folder.
-
-##  🎧 Demos
-Not ready to set up the environment on your local machine just yet? No problem! We've got you covered with our online demos. You can try out VALL-E X directly on Hugging Face or Google Colab, experiencing the model's capabilities hassle-free!
-<br>
-[![Open in Spaces](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue.svg)](https://huggingface.co/spaces/Plachta/VALL-E-X)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1yyD_sz531QntLKowMHo-XxorsFBCfKul?usp=sharing)
-
 
 ## 📢 Features
 
@@ -148,7 +140,7 @@ Explore our [demo page](https://plachtaa.github.io/) for a lot more examples!
 <details open>
   <summary><h3>🪑 Basics</h3></summary>
 
-python
+```python
 from utils.generation import SAMPLE_RATE, generate_audio, preload_models
 from scipy.io.wavfile import write as write_wav
 from IPython.display import Audio
@@ -167,7 +159,7 @@ write_wav("vallex_generation.wav", SAMPLE_RATE, audio_array)
 
 # play text in notebook
 Audio(audio_array, rate=SAMPLE_RATE)
-
+```
 
 [hamburger.webm](https://github.com/Plachtaa/VALL-E-X/assets/112609742/578d7bbe-cda9-483e-898c-29646edc8f2e)
 
@@ -179,24 +171,24 @@ Audio(audio_array, rate=SAMPLE_RATE)
 This VALL-E X implementation also supports Chinese and Japanese. All three languages have equally awesome performance!
 <br>
 
-python
+```python
 
 text_prompt = """
     チュソクは私のお気に入りの祭りです。 私は数日間休んで、友人や家族との時間を過ごすことができます。
 """
 audio_array = generate_audio(text_prompt)
-
+```
 
 [vallex_japanese.webm](https://github.com/Plachtaa/VALL-E-X/assets/112609742/ee57a688-3e83-4be5-b0fe-019d16eec51c)
 
 *Note: VALL-E X controls accent perfectly even when synthesizing code-switch text. However, you need to manually denote language of respective sentences (since our g2p tool is rule-base)*
-python
+```python
 text_prompt = """
     [EN]The Thirty Years' War was a devastating conflict that had a profound impact on Europe.[EN]
     [ZH]这是历史的开始。 如果您想听更多，请继续。[ZH]
 """
 audio_array = generate_audio(text_prompt, language='mix')
-
+```
 
 [vallex_codeswitch.webm](https://github.com/Plachtaa/VALL-E-X/assets/112609742/d8667abf-bd08-499f-a383-a861d852f98a)
 
@@ -209,12 +201,12 @@ VALL-E X provides tens of speaker voices which you can directly used for inferen
 
 > VALL-E X tries to match the tone, pitch, emotion and prosody of a given preset. The model also attempts to preserve music, ambient noise, etc.
 
-python
+```python
 text_prompt = """
 I am an innocent boy with a smoky voice. It is a great honor for me to speak at the United Nations today.
 """
 audio_array = generate_audio(text_prompt, prompt="dingzhen")
-
+```
 
 [smoky.webm](https://github.com/Plachtaa/VALL-E-X/assets/112609742/d3f55732-b1cd-420f-87d6-eab60db14dc5)
 
@@ -228,7 +220,7 @@ To make a voice prompt, you need to provide a speech of 3~10 seconds long, as we
 You can also leave the transcript blank to let the [Whisper](https://github.com/openai/whisper) model to generate the transcript.
 > VALL-E X tries to match the tone, pitch, emotion and prosody of a given prompt. The model also attempts to preserve music, ambient noise, etc.
 
-python
+```python
 from utils.prompt_making import make_prompt
 
 ### Use given transcript
@@ -237,9 +229,9 @@ make_prompt(name="paimon", audio_prompt_path="paimon_prompt.wav",
 
 ### Alternatively, use whisper
 make_prompt(name="paimon", audio_prompt_path="paimon_prompt.wav")
-
+```
 Now let's try out the prompt we've just made!
-python
+```python
 from utils.generation import SAMPLE_RATE, generate_audio, preload_models
 from scipy.io.wavfile import write as write_wav
 
@@ -253,7 +245,7 @@ audio_array = generate_audio(text_prompt, prompt="paimon")
 
 write_wav("paimon_cloned.wav", SAMPLE_RATE, audio_array)
 
-
+```
 
 [paimon_prompt.webm](https://github.com/Plachtaa/VALL-E-X/assets/112609742/e7922859-9d12-4e2a-8651-e156e4280311)
 
@@ -270,9 +262,9 @@ write_wav("paimon_cloned.wav", SAMPLE_RATE, audio_array)
 Not comfortable with codes? No problem! We've also created a user-friendly graphical interface for VALL-E X. It allows you to interact with the model effortlessly, making voice cloning and multilingual speech synthesis a breeze.
 <br>
 You can launch the UI by the following command:
-commandline
+```commandline
 python -X utf8 launch-ui.py
-
+```
 </details>
 
 ## 🛠️ Hardware and Inference Speed
@@ -305,15 +297,15 @@ Comparing to [Bark](https://github.com/suno-ai/bark):
 ## ❓ FAQ
 
 #### Where is code for training?
-* [lifeiteng's vall-e](https://github.com/lifeiteng/vall-e) has almost everything. There is no plan to release our training code because there is no difference between lifeiteng's implementation.
+* [lifeiteng's vall-e](https://github.com/lifeiteng/vall-e) has almost everything. There is no plan to release our training code because there is no difference between Lifeiteng's implementation.
 
 
 #### How much VRAM do I need?
 * 6GB GPU VRAM - Almost all NVIDIA GPUs satisfy the requirement.
 
-#### Why the model fails to generate long text?
+#### Why did the model fail to generate long text?
 * Transformer's computation complexity increases quadratically while the sequence length increases. Hence, all training 
-are kept under 22 seconds. Please make sure the total length of audio prompt and generated audio is less than 22 seconds 
+is kept under 22 seconds. Please make sure the total length of the audio prompt and generated audio is less than 22 seconds 
 to ensure acceptable performance. 
 
 
@@ -323,7 +315,7 @@ to ensure acceptable performance.
 ## 🙏 Appreciation
 - [VALL-E X paper](https://arxiv.org/pdf/2303.03926) for the brilliant idea
 - [lifeiteng's vall-e](https://github.com/lifeiteng/vall-e) for related training code
-- [bark](https://github.com/suno-ai/bark) for the amazing pioneering work in neuro-codec TTS model
+- [bark](https://github.com/suno-ai/bark) for the amazing pioneering work in the neuro-codec TTS model
 
 
 ## 📜 License
