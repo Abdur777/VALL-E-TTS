@@ -1,5 +1,4 @@
 # VALL-E X: Multilingual Text-to-Speech Synthesis and Voice Cloning 🔊
-[![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/qCBRmAnTxg)
 <br>
 English | [中文](README-ZH.md)
 <br>
@@ -11,7 +10,6 @@ An open source implementation of Microsoft's [VALL-E X](https://arxiv.org/pdf/23
 VALL-E X is an amazing multilingual text-to-speech (TTS) model proposed by Microsoft. While Microsoft initially publish in their research paper, they did not release any code or pretrained models. Recognizing the potential and value of this technology, our team took on the challenge to reproduce the results and train our own model. We are glad to share our trained VALL-E X model with the community, allowing everyone to experience the power next-generation TTS! 🎧
 <br>
 <br>
-More details about the model are presented in [model card](./model-card.md).
 
 ## 📖 Quick Index
 * [🚀 Updates](#-updates)
@@ -20,7 +18,6 @@ More details about the model are presented in [model card](./model-card.md).
 * [🎧 Demos](#-demos)
 * [🐍 Usage](#-usage-in-python)
 * [❓ FAQ](#-faq)
-* [🧠 TODO](#-todo)
 
 ## 🚀 Updates
 **2023.09.10**
@@ -32,19 +29,17 @@ More details about the model are presented in [model card](./model-card.md).
 **2023.08.23**
 - Added long text generation.
 
-**2023.08.20**
-- Added [Chinese README](README-ZH.md).
 
 **2023.08.14**
 - Pretrained VALL-E X checkpoint is now released. Download it [here](https://drive.google.com/file/d/10gdQWvP-K_e1undkvv0p2b7SU6I4Egyl/view?usp=sharing)
 
 ## 💻 Installation
 ### Install with pip, Python 3.10, CUDA 11.7 ~ 12.0, PyTorch 2.0+
-```commandline
+commandline
 git clone https://github.com/Plachtaa/VALL-E-X.git
 cd VALL-E-X
 pip install -r requirements.txt
-```
+
 
 > Note: If you want to make prompt, you need to install ffmpeg and add its folder to the environment variable PATH.
 
@@ -153,7 +148,7 @@ Explore our [demo page](https://plachtaa.github.io/) for a lot more examples!
 <details open>
   <summary><h3>🪑 Basics</h3></summary>
 
-```python
+python
 from utils.generation import SAMPLE_RATE, generate_audio, preload_models
 from scipy.io.wavfile import write as write_wav
 from IPython.display import Audio
@@ -172,7 +167,7 @@ write_wav("vallex_generation.wav", SAMPLE_RATE, audio_array)
 
 # play text in notebook
 Audio(audio_array, rate=SAMPLE_RATE)
-```
+
 
 [hamburger.webm](https://github.com/Plachtaa/VALL-E-X/assets/112609742/578d7bbe-cda9-483e-898c-29646edc8f2e)
 
@@ -184,24 +179,24 @@ Audio(audio_array, rate=SAMPLE_RATE)
 This VALL-E X implementation also supports Chinese and Japanese. All three languages have equally awesome performance!
 <br>
 
-```python
+python
 
 text_prompt = """
     チュソクは私のお気に入りの祭りです。 私は数日間休んで、友人や家族との時間を過ごすことができます。
 """
 audio_array = generate_audio(text_prompt)
-```
+
 
 [vallex_japanese.webm](https://github.com/Plachtaa/VALL-E-X/assets/112609742/ee57a688-3e83-4be5-b0fe-019d16eec51c)
 
 *Note: VALL-E X controls accent perfectly even when synthesizing code-switch text. However, you need to manually denote language of respective sentences (since our g2p tool is rule-base)*
-```python
+python
 text_prompt = """
     [EN]The Thirty Years' War was a devastating conflict that had a profound impact on Europe.[EN]
     [ZH]这是历史的开始。 如果您想听更多，请继续。[ZH]
 """
 audio_array = generate_audio(text_prompt, language='mix')
-```
+
 
 [vallex_codeswitch.webm](https://github.com/Plachtaa/VALL-E-X/assets/112609742/d8667abf-bd08-499f-a383-a861d852f98a)
 
@@ -214,12 +209,12 @@ VALL-E X provides tens of speaker voices which you can directly used for inferen
 
 > VALL-E X tries to match the tone, pitch, emotion and prosody of a given preset. The model also attempts to preserve music, ambient noise, etc.
 
-```python
+python
 text_prompt = """
 I am an innocent boy with a smoky voice. It is a great honor for me to speak at the United Nations today.
 """
 audio_array = generate_audio(text_prompt, prompt="dingzhen")
-```
+
 
 [smoky.webm](https://github.com/Plachtaa/VALL-E-X/assets/112609742/d3f55732-b1cd-420f-87d6-eab60db14dc5)
 
@@ -233,7 +228,7 @@ To make a voice prompt, you need to provide a speech of 3~10 seconds long, as we
 You can also leave the transcript blank to let the [Whisper](https://github.com/openai/whisper) model to generate the transcript.
 > VALL-E X tries to match the tone, pitch, emotion and prosody of a given prompt. The model also attempts to preserve music, ambient noise, etc.
 
-```python
+python
 from utils.prompt_making import make_prompt
 
 ### Use given transcript
@@ -242,9 +237,9 @@ make_prompt(name="paimon", audio_prompt_path="paimon_prompt.wav",
 
 ### Alternatively, use whisper
 make_prompt(name="paimon", audio_prompt_path="paimon_prompt.wav")
-```
+
 Now let's try out the prompt we've just made!
-```python
+python
 from utils.generation import SAMPLE_RATE, generate_audio, preload_models
 from scipy.io.wavfile import write as write_wav
 
@@ -258,7 +253,7 @@ audio_array = generate_audio(text_prompt, prompt="paimon")
 
 write_wav("paimon_cloned.wav", SAMPLE_RATE, audio_array)
 
-```
+
 
 [paimon_prompt.webm](https://github.com/Plachtaa/VALL-E-X/assets/112609742/e7922859-9d12-4e2a-8651-e156e4280311)
 
@@ -275,9 +270,9 @@ write_wav("paimon_cloned.wav", SAMPLE_RATE, audio_array)
 Not comfortable with codes? No problem! We've also created a user-friendly graphical interface for VALL-E X. It allows you to interact with the model effortlessly, making voice cloning and multilingual speech synthesis a breeze.
 <br>
 You can launch the UI by the following command:
-```commandline
+commandline
 python -X utf8 launch-ui.py
-```
+
 </details>
 
 ## 🛠️ Hardware and Inference Speed
@@ -312,9 +307,6 @@ Comparing to [Bark](https://github.com/suno-ai/bark):
 #### Where is code for training?
 * [lifeiteng's vall-e](https://github.com/lifeiteng/vall-e) has almost everything. There is no plan to release our training code because there is no difference between lifeiteng's implementation.
 
-#### Where can I download the model checkpoint?
-* We use `wget` to download the model to directory `./checkpoints/` when you run the program for the first time.
-* If the download fails on the first run, please manually download from [this link](https://huggingface.co/Plachta/VALL-E-X/resolve/main/vallex-checkpoint.pt), and put the file under directory `./checkpoints/`.
 
 #### How much VRAM do I need?
 * 6GB GPU VRAM - Almost all NVIDIA GPUs satisfy the requirement.
@@ -327,29 +319,17 @@ to ensure acceptable performance.
 
 #### MORE TO BE ADDED...
 
-## 🧠 TODO
-- [x] Add Chinese README
-- [x] Long text generation
-- [x] Replace Encodec decoder with Vocos decoder
-- [ ] Fine-tuning for better voice adaptation
-- [ ] `.bat` scripts for non-python users
-- [ ] To be added...
 
 ## 🙏 Appreciation
 - [VALL-E X paper](https://arxiv.org/pdf/2303.03926) for the brilliant idea
 - [lifeiteng's vall-e](https://github.com/lifeiteng/vall-e) for related training code
 - [bark](https://github.com/suno-ai/bark) for the amazing pioneering work in neuro-codec TTS model
 
-## ⭐️ Show Your Support
-
-If you find VALL-E X interesting and useful, give us a star on GitHub! ⭐️ It encourages us to keep improving the model and adding exciting features.
 
 ## 📜 License
 
 VALL-E X is licensed under the [MIT License](./LICENSE).
 
 ---
-
-Have questions or need assistance? Feel free to [open an issue](https://github.com/Plachtaa/VALL-E-X/issues/new) or join our [Discord](https://discord.gg/qCBRmAnTxg)
 
 Happy voice cloning! 🎤
