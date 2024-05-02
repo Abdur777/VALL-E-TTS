@@ -1,9 +1,8 @@
 # VALL-E X: Multilingual Text-to-Speech Synthesis and Voice Cloning 🔊
 <br>
-English | [中文](README-ZH.md)
+English 
 <br>
 An open source implementation of Microsoft's [VALL-E X](https://arxiv.org/pdf/2303.03926) zero-shot TTS model.<br>
-**We release our trained model to the public for research or application usage.**
 
 ![vallex-framework](/images/vallex_framework.jpg "VALL-E X framework")
 
@@ -35,7 +34,7 @@ VALL-E X is an amazing multilingual text-to-speech (TTS) model proposed by Micro
 ## 💻 Installation
 ### Install with pip, Python 3.10, CUDA 11.7 ~ 12.0, PyTorch 2.0+
 ```commandline
-git clone https://github.com/Plachtaa/VALL-E-X.git
+git clone https://github.com/Abdur777/VALL-E-TTS
 cd VALL-E-X
 pip install -r requirements.txt
 ```
